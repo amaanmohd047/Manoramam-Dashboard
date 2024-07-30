@@ -1,0 +1,92 @@
+export const guests = [
+  {
+    fullName: "Susana Huber",
+    email: "susanahuber@knowlysis.com",
+    nationality: "Viet Nam",
+    nationalID: 8459541410,
+  },
+  {
+    fullName: "French Stephenson",
+    email: "frenchstephenson@knowlysis.com",
+    nationality: "Switzerland",
+    nationalID: 8042813141,
+  },
+  {
+    fullName: "Hammond Cox",
+    email: "hammondcox@knowlysis.com",
+    nationality: "Central African Republic",
+    nationalID: 4655661523,
+  },
+  {
+    fullName: "Acevedo Hopper",
+    email: "acevedohopper@knowlysis.com",
+    nationality: "Denmark",
+    nationalID: 3972210457,
+  },
+  {
+    fullName: "Hayes Herrera",
+    email: "hayesherrera@knowlysis.com",
+    nationality: "Laos",
+    nationalID: 7979122288,
+  },
+  {
+    fullName: "Samantha Zamora",
+    email: "samanthazamora@knowlysis.com",
+    nationality: "Norway",
+    nationalID: 9122751565,
+  },
+  {
+    fullName: "Bender Byers",
+    email: "benderbyers@knowlysis.com",
+    nationality: "Wallis and Futuna Islands",
+    nationalID: 8164470796,
+  },
+  {
+    fullName: "Mable Moon",
+    email: "mablemoon@knowlysis.com",
+    nationality: "Equatorial Guinea",
+    nationalID: 4274639972,
+  },
+  {
+    fullName: "Roseann Beard",
+    email: "roseannbeard@knowlysis.com",
+    nationality: "Antigua and Barbuda",
+    nationalID: 5128445728,
+  },
+  {
+    fullName: "Padilla Black",
+    email: "padillablack@knowlysis.com",
+    nationality: "Rwanda",
+    nationalID: 4105566262,
+  },
+  {
+    fullName: "Chrystal Steele",
+    email: "chrystalsteele@knowlysis.com",
+    nationality: "Greece",
+    nationalID: 3803132865,
+  },
+  {
+    fullName: "Jane Owens",
+    email: "janeowens@knowlysis.com",
+    nationality: "Macau",
+    nationalID: 4290880756,
+  },
+  {
+    fullName: "Karla Cash",
+    email: "karlacash@knowlysis.com",
+    nationality: "Sao Tome and Principe",
+    nationalID: 4233514944,
+  },
+  {
+    fullName: "Key Rivas",
+    email: "keyrivas@knowlysis.com",
+    nationality: "Bulgaria",
+    nationalID: 3028767757,
+  },
+  {
+    fullName: "Corrine Cook",
+    email: "corrinecook@knowlysis.com",
+    nationality: "Armenia",
+    nationalID: 7003857714,
+  },
+];
