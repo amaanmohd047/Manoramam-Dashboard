@@ -5,8 +5,8 @@ import Button from "../ui/Button";
 import { subtractDates } from "../utils/helpers";
 
 import { bookings } from "./data-bookings";
-import { rooms } from "./data-rooms";
-import { guests } from "./data-guests";
+// import { rooms } from "./data-rooms";
+import { guests } from "./mydata-guest";
 
 // const originalSettings = {
 //   minBookingLength: 3,
@@ -20,10 +20,10 @@ async function deleteGuests() {
   if (error) console.log(error.message);
 }
 
-async function deleteRooms() {
-  const { error } = await supabase.from("rooms").delete().gt("id", 0);
-  if (error) console.log(error.message);
-}
+// async function deleteRooms() {
+//   const { error } = await supabase.from("rooms").delete().gt("id", 0);
+//   if (error) console.log(error.message);
+// }
 
 async function deleteBookings() {
   const { error } = await supabase.from("bookings").delete().gt("id", 0);
@@ -35,10 +35,10 @@ async function createGuests() {
   if (error) console.log(error.message);
 }
 
-async function createRooms() {
-  const { error } = await supabase.from("rooms").insert(rooms);
-  if (error) console.log(error.message);
-}
+// async function createRooms() {
+//   const { error } = await supabase.from("rooms").insert(rooms);
+//   if (error) console.log(error.message);
+// }
 
 async function createBookings() {
   // Bookings need a guestId and a roomId. We can't tell Supabase IDs for each object, it will calculate them on its own. So it might be different for different people, especially after multiple uploads. Therefore, we need to first get all guestIds and roomIds, and then replace the original IDs in the booking data with the actual ones from the DB
@@ -47,17 +47,29 @@ async function createBookings() {
     .select("id")
     .order("id");
   const allGuestIds = guestsIds.map((room) => room.id);
+
+  console.log(allGuestIds);
+
   const { data: roomsIds } = await supabase
     .from("rooms")
     .select("id")
     .order("id");
   const allroomIds = roomsIds.map((room) => room.id);
 
+  const { data: rooms } = await supabase.from("rooms").select("*");
+
+  console.log(rooms);
   const finalBookings = bookings.map((booking) => {
     // Here relying on the order of rooms, as they don't have and ID yet
-    const room = rooms.at(booking.roomId - 1);
-    const numNights = subtractDates(booking.endDate, booking.startDate);
-    const roomPrice = numNights * (room.regularPrice - room.discount);
+    const room = rooms.at(booking.roomId - 39);
+
+    const numNights = subtractDates(booking.arrivalDate, booking.departureDate);
+
+    const roomPrice =
+      numNights < 0
+        ? -numNights * (room.regularPrice - room.discount)
+        : numNights * (room.regularPrice - room.discount);
+    // console.log(roomPrice)
     const extrasPrice = booking.hasBreakfast
       ? numNights * 15 * booking.numGuests
       : 0; // hardcoded breakfast price
@@ -65,20 +77,20 @@ async function createBookings() {
 
     let status;
     if (
-      isPast(new Date(booking.endDate)) &&
-      !isToday(new Date(booking.endDate))
+      isPast(new Date(booking.departureDate)) &&
+      !isToday(new Date(booking.departureDate))
     )
       status = "checked-out";
     if (
-      isFuture(new Date(booking.startDate)) ||
-      isToday(new Date(booking.startDate))
+      isFuture(new Date(booking.arrivalDate)) ||
+      isToday(new Date(booking.arrivalDate))
     )
       status = "unconfirmed";
     if (
-      (isFuture(new Date(booking.endDate)) ||
-        isToday(new Date(booking.endDate))) &&
-      isPast(new Date(booking.startDate)) &&
-      !isToday(new Date(booking.startDate))
+      (isFuture(new Date(booking.departureDate)) ||
+        isToday(new Date(booking.departureDate))) &&
+      isPast(new Date(booking.arrivalDate)) &&
+      !isToday(new Date(booking.arrivalDate))
     )
       status = "checked-in";
 
@@ -88,8 +100,8 @@ async function createBookings() {
       roomPrice,
       extrasPrice,
       totalPrice,
-      guestId: allGuestIds.at(booking.guestId - 1),
-      roomId: allroomIds.at(booking.roomId - 1),
+      guestId: allGuestIds.at(booking.guestId - 107),
+      roomId: allroomIds.at(booking.roomId - 39),
       status,
     };
   });
@@ -108,11 +120,11 @@ function Uploader() {
     // Bookings need to be deleted FIRST
     await deleteBookings();
     await deleteGuests();
-    await deleteRooms();
+    // await deleteRooms();
 
     // Bookings need to be created LAST
     await createGuests();
-    await createRooms();
+    // await createRooms();
     await createBookings();
 
     setIsLoading(false);
@@ -129,7 +141,7 @@ function Uploader() {
     <div
       style={{
         marginTop: "auto",
-        backgroundColor: "#e0e7ff",
+        backgroundColor: "#eee" /* var(--color-grey-100) */,
         padding: "8px",
         borderRadius: "5px",
         textAlign: "center",

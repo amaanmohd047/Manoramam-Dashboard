@@ -6,6 +6,7 @@ import styled from "styled-components";
 const Main = styled.main`
   padding: 4rem 4.8rem 6.4rem;
   background-color: var(--color-grey-50);
+  overflow: scroll;
 `;
 
 const Container = styled.div`
@@ -18,9 +19,9 @@ const Container = styled.div`
 
 const StyledAppLayout = styled.div`
   height: 100vh;
-  display: grid;
   grid-template-columns: 27rem 1fr;
   grid-template-rows: auto 1fr;
+  display: grid;
 `;
 
 export default function AppLayout() {

@@ -8,7 +8,6 @@ import {
 } from "react-icons/hi2";
 
 import DataItem from "../../ui/DataItem";
-import { Flag } from "../../ui/Flag";
 
 import { formatDistanceFromNow, formatCurrency } from "../../utils/helpers";
 
@@ -24,7 +23,7 @@ const StyledBookingDataBox = styled.section`
 const Header = styled.header`
   background-color: var(--color-brand-500);
   padding: 2rem 4rem;
-  color: #e0e7ff;
+  color: #fefefe;
   font-size: 1.8rem;
   font-weight: 500;
   display: flex;
@@ -105,8 +104,8 @@ const Footer = styled.footer`
 function BookingDataBox({ booking }) {
   const {
     created_at,
-    startDate,
-    endDate,
+    arrivalDate,
+    departureDate,
     numNights,
     numGuests,
     roomPrice,
@@ -114,8 +113,8 @@ function BookingDataBox({ booking }) {
     totalPrice,
     hasBreakfast,
     observations,
-    isPaid,
-    guests: { fullName: guestName, email, country, countryFlag, nationalID },
+    isFullyPaid,
+    guests: { name: guestName, email, nationalID, contact },
     rooms: { name: roomName },
   } = booking;
 
@@ -130,22 +129,24 @@ function BookingDataBox({ booking }) {
         </div>
 
         <p>
-          {format(new Date(startDate), "EEE, MMM dd yyyy")} (
-          {isToday(new Date(startDate))
+          {format(new Date(arrivalDate), "EEE, MMM dd yyyy")} (
+          {isToday(new Date(arrivalDate))
             ? "Today"
-            : formatDistanceFromNow(startDate)}
-          ) &mdash; {format(new Date(endDate), "EEE, MMM dd yyyy")}
+            : formatDistanceFromNow(arrivalDate)}
+          ) &mdash; {format(new Date(departureDate), "EEE, MMM dd yyyy")}
         </p>
       </Header>
 
       <Section>
         <Guest>
-          {countryFlag && <Flag src={countryFlag} alt={`Flag of ${country}`} />}
+          {/* {countryFlag && <Flag src={countryFlag} alt={`Flag of ${country}`} />} */}
           <p>
             {guestName} {numGuests > 1 ? `+ ${numGuests - 1} guests` : ""}
           </p>
           <span>&bull;</span>
           <p>{email}</p>
+          <span>&bull;</span>
+          <p>{contact}</p>
           <span>&bull;</span>
           <p>National ID {nationalID}</p>
         </Guest>
@@ -163,7 +164,7 @@ function BookingDataBox({ booking }) {
           {hasBreakfast ? "Yes" : "No"}
         </DataItem>
 
-        <Price isPaid={isPaid}>
+        <Price isPaid={isFullyPaid}>
           <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
             {formatCurrency(totalPrice)}
 
@@ -173,7 +174,7 @@ function BookingDataBox({ booking }) {
               )} breakfast)`}
           </DataItem>
 
-          <p>{isPaid ? "Paid" : "Will pay at property"}</p>
+          <p>{isFullyPaid ? "Paid" : "Will pay at property"}</p>
         </Price>
       </Section>
 

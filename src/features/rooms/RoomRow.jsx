@@ -10,7 +10,8 @@ import Menus from "../../ui/Menus";
 
 const TableRow = styled.div`
   display: grid;
-  grid-template-columns: repeat(7, minmax(70px, 1fr)) 0.4fr;
+  /* grid-template-columns: repeat(7, minmax(70px, 1fr)) 0.4fr;  */
+  grid-template-columns: repeat(6, minmax(70px, 0.85fr)) 0.4fr;
   column-gap: 2.4rem;
   align-items: center;
   padding: 1.4rem 2.4rem;
@@ -22,12 +23,15 @@ const TableRow = styled.div`
 
 const Img = styled.img`
   display: block;
-  margin-left: 0.3rem;
-  width: 6.4rem;
+  margin-left: 1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  width: 7.2rem;
   aspect-ratio: 3 / 2;
   object-fit: cover;
   object-position: center;
   transform: scale(1.5) translateX(-7px);
+  border-radius: 5%;
 `;
 
 const Room = styled.div`
@@ -86,11 +90,11 @@ export default function RoomRow({ room }) {
       <Price>upto {maxCapacity}</Price>
       <Price>{formatCurrency(regularPrice)}</Price>
       <Discount>{discount ? formatCurrency(discount) : "None"}</Discount>
-      {available ? (
+      {/* {available ? (
         <Available $color="green">Yes</Available>
       ) : (
         <Available $color="red">No</Available>
-      )}
+      )} */}
       {/* Make this button as a configuration. 
         It will redirect to a form for configuration.
       */}
@@ -115,8 +119,8 @@ export default function RoomRow({ room }) {
 
             <Modal.Window name="confirm-delete">
               <ConfirmDelete
-                onConfirm={() => deleteRoom(roomId)}
                 resourceName="Room"
+                onConfirm={() => deleteRoom(roomId)}
                 disabled={isDeleting}
               />
             </Modal.Window>
