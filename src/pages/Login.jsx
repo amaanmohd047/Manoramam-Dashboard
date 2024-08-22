@@ -12,14 +12,16 @@ const LoginLayout = styled.main`
   gap: 3.2rem;
   background-color: var(--color-grey-0);
   padding-bottom: 10rem;
+  text-align: center;
 `;
 
 function Login() {
   return (
     <LoginLayout>
       <Logo />
-      <Heading as={"h4"}>Log in to your account</Heading>
+      <Heading as={"h4"}>Login to your account</Heading>
       <LoginForm />
+      <p>Use the above demo credentials to log in</p>
     </LoginLayout>
   );
 }
