@@ -2,6 +2,7 @@ import styled from "styled-components";
 import HeaderMenu from "./HeaderMenu";
 import UserAvatar from "../features/authentication/UserAvatar";
 
+
 const StyledHeader = styled.header`
   background-color: var(--color-grey-0);
   /* background-color: #fdb; */
@@ -11,13 +12,16 @@ const StyledHeader = styled.header`
   align-items: center;
   justify-content: flex-end;
   gap: 2.4rem;
+  position: relative;
 `;
 
 export default function Header() {
   return (
-    <StyledHeader>
-      <UserAvatar />
-      <HeaderMenu />
-    </StyledHeader>
+    <>
+      <StyledHeader>
+        <UserAvatar />
+        <HeaderMenu />
+      </StyledHeader>
+    </>
   );
 }

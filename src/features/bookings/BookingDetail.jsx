@@ -16,6 +16,7 @@ import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useDeleteBooking } from "./useDeleteBooking";
 import { HiArrowUpOnSquare } from "react-icons/hi2";
+import Empty from "../../ui/Empty";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -37,7 +38,22 @@ function BookingDetail() {
   const { deleteBooking, isDeletingBooking } = useDeleteBooking();
 
   if (isLoading) return <Spinner />;
-  if (error) return console.log(`Error: ${error.message}`);
+
+  if (!booking)
+    return (
+      <>
+        <Empty resourceName={`booking by id #${bookingId}`} />
+        <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
+      </>
+    );
+
+  if (error)
+    return (
+      <>
+        <Heading as={"h4"}> Something went wrong!</Heading>;
+        <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
+      </>
+    );
 
   const { status } = booking;
 

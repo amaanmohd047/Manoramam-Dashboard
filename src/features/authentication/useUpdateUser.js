@@ -8,7 +8,6 @@ export function useUpdateUser() {
     mutationFn: updateCurrentUserAPI,
     mutationKey: ["user"],
     onSuccess: (user) => {
-      console.log(user);
       queryClient.invalidateQueries(["user"]);
       queryClient.setQueryData(["user"], user.user);
       toast.success("Profile updated successfully!");

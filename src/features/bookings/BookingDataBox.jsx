@@ -139,16 +139,15 @@ function BookingDataBox({ booking }) {
 
       <Section>
         <Guest>
-          {/* {countryFlag && <Flag src={countryFlag} alt={`Flag of ${country}`} />} */}
           <p>
             {guestName} {numGuests > 1 ? `+ ${numGuests - 1} guests` : ""}
           </p>
           <span>&bull;</span>
           <p>{email}</p>
           <span>&bull;</span>
-          <p>{contact}</p>
+          <p>{contact || "Contact not provided"}</p>
           <span>&bull;</span>
-          <p>National ID {nationalID}</p>
+          <p>National ID: {nationalID}</p>
         </Guest>
 
         {observations && (

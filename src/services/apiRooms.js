@@ -10,7 +10,6 @@ export async function getRooms() {
 }
 
 export async function createEditRoom(newRoom, id = 0) {
-  console.log(newRoom);
 
   const hasImagePath = newRoom.imageUrl.name
     ? newRoom.imageUrl.name.startsWith(supabaseUrl)
@@ -20,8 +19,6 @@ export async function createEditRoom(newRoom, id = 0) {
     " ",
     "_"
   )}`?.replaceAll("/", "");
-
-  console.log(imageName, hasImagePath);
 
   const imagePath = hasImagePath
     ? newRoom.imageUrl

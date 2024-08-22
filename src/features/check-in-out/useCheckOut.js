@@ -15,6 +15,7 @@ export function useCheckOut() {
       toast.success(`Booking #${data.id} checked out successfully! 🎉`);
       queryClient.invalidateQueries({ active: true });
       navigate("/");
+
     },
   });
 

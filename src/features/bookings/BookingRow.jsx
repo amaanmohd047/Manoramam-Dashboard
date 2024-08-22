@@ -18,6 +18,7 @@ import { useCheckOut } from "../check-in-out/useCheckOut";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useDeleteBooking } from "./useDeleteBooking";
+import ConfirmCheckOut from "../../ui/ConfirmCheckOut";
 
 const Room = styled.div`
   font-size: 1.6rem;
@@ -118,25 +119,30 @@ function BookingRow({
               </Menus.Button>
             )}
             {status === "checked-in" && (
-              <Menus.Button
-                icon={<HiArrowUpOnSquare />}
-                onClick={() => checkOut(bookingId)}
-                disabled={checkingOut}
-              >
-                {" "}
-                Check Out{" "}
-              </Menus.Button>
+              <Modal.Open open="confirm-check-out">
+                <Menus.Button
+                  icon={<HiArrowUpOnSquare />}
+                  disabled={checkingOut}
+                >
+                  {" "}
+                  Check Out{" "}
+                </Menus.Button>
+              </Modal.Open>
             )}
+
             <Modal.Open open="confirm-delete-booking">
-              <Menus.Button
-                icon={<HiTrash />}
-                onClick={() => checkOut(bookingId)}
-                disabled={checkingOut}
-              >
+              <Menus.Button icon={<HiTrash />} disabled={isDeletingBooking}>
                 Delete Booking
               </Menus.Button>
             </Modal.Open>
           </Menus.List>
+
+          <Modal.Window name="confirm-check-out">
+            <ConfirmCheckOut
+              onConfirm={() => checkOut(bookingId)}
+              disabled={checkingOut}
+            />
+          </Modal.Window>
 
           <Modal.Window name="confirm-delete-booking">
             <ConfirmDelete

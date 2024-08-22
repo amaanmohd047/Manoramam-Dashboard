@@ -87,6 +87,7 @@ function Toggle({ id }) {
   const { openId, closeMenu, openMenu, setPosition } = useContext(MenusContext);
 
   function handleClick(e) {
+    e.stopPropagation();
     const rect = e.target.closest("button").getBoundingClientRect();
     setPosition({
       x: window.innerWidth - rect.width - rect.x,
@@ -106,23 +107,9 @@ function Toggle({ id }) {
 function List({ id, children }) {
   const { openId, position, closeMenu } = useContext(MenusContext);
 
-  const refMenu = useOverlayClick(closeMenu, true);
-
-  // OverLay Click Handler
-  // const refMenu = useRef(null);
-
-  // useEffect(() => {
-  //   function handleClick(e) {
-  //     console.log(refMenu.current);
-  //     if (refMenu.current && !refMenu.current.contains(e.target)) {
-  //       setTimeout(closeMenu, 10);
-  //     }
-  //   }
-  //   document.addEventListener("click", handleClick, true);
-  //   return () => {
-  //     document.removeEventListener("click", handleClick, true);
-  //   };
-  // }, [closeMenu]);
+  const refMenu = useOverlayClick((e) => {
+    closeMenu();
+  }, false);
 
   if (openId !== id) return null;
 
@@ -136,7 +123,7 @@ function List({ id, children }) {
 
 function Button({ children, icon, onClick }) {
   const { closeMenu } = useContext(MenusContext);
-  function handleClick() {
+  function handleClick(e) {
     onClick?.();
     closeMenu();
   }
