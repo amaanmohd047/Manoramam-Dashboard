@@ -1,4 +1,12 @@
 import styled from "styled-components";
+import { useRecentBookings } from "./useRecentBookings";
+import { useRecentStays } from "./useRecentStays";
+import { useFetchRooms } from "../rooms/useFetchRooms";
+
+import Spinner from "../../ui/Spinner";
+import Stats from "./Stats";
+import SalesChart from "./SalesChart";
+import DurationChart from "./DurationChart";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -8,7 +16,29 @@ const StyledDashboardLayout = styled.div`
 `;
 
 const DashboardLayout = () => {
-  return <StyledDashboardLayout></StyledDashboardLayout>;
+  const {
+    isLoading: isLoadingBookings,
+    bookings,
+    numDays,
+  } = useRecentBookings();
+  const { isLoading: isLoadingStays, stays, confirmedStays } = useRecentStays();
+  const { rooms, isLoading: isLoadingRooms } = useFetchRooms();
+
+  if (isLoadingBookings || isLoadingStays || isLoadingRooms) return <Spinner />;
+
+  return (
+    <StyledDashboardLayout>
+      <Stats
+        bookings={bookings}
+        numDays={numDays}
+        roomCount={rooms.length}
+        confirmedStays={confirmedStays}
+      />
+
+      <DurationChart />
+      <SalesChart bookings={bookings} numDays={numDays} />
+    </StyledDashboardLayout>
+  );
 };
 
 export default DashboardLayout;

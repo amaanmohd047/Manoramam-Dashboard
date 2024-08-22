@@ -63,12 +63,10 @@ async function createBookings() {
     // Here relying on the order of rooms, as they don't have and ID yet
     const room = rooms.at(booking.roomId - 39);
 
-    const numNights = subtractDates(booking.arrivalDate, booking.departureDate);
+    const numNights = Math.abs(subtractDates(booking.arrivalDate, booking.departureDate));
 
-    const roomPrice =
-      numNights < 0
-        ? -numNights * (room.regularPrice - room.discount)
-        : numNights * (room.regularPrice - room.discount);
+    const roomPrice = Math.abs(numNights * (room.regularPrice - room.discount));
+
     // console.log(roomPrice)
     const extrasPrice = booking.hasBreakfast
       ? numNights * 15 * booking.numGuests

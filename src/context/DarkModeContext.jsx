@@ -23,8 +23,8 @@ function useDarkMode() {
   const context = useContext(DarkModeContext);
   if (context === undefined)
     throw new Error("useDarkMode must be used within a DarkModeProvider");
-
-  return context;
+  const { isDarkMode, toggleDarkMode } = context;
+  return { isDarkMode, toggleDarkMode };
 }
 
 export { DarkModeProvider, useDarkMode };

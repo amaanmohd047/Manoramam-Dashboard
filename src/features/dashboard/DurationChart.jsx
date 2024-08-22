@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import Heading from "../../ui/Heading";
+import { PieChart, Pie, Legend, Cell, ResponsiveContainer } from "recharts";
+import { useDarkMode } from "../../context/DarkModeContext";
+import { useRecentStays } from "./useRecentStays";
+import Spinner from "../../ui/Spinner";
 
 const ChartBox = styled.div`
   /* Box */
@@ -22,42 +27,32 @@ const startDataLight = [
   {
     duration: "1 night",
     value: 0,
-    color: "#ef4444",
+    color: "#4E79A7",
   },
   {
     duration: "2 nights",
     value: 0,
-    color: "#f97316",
+    color: "#F28E2B",
   },
   {
     duration: "3 nights",
     value: 0,
-    color: "#eab308",
+    color: "#E15759",
   },
   {
     duration: "4-5 nights",
     value: 0,
-    color: "#84cc16",
+    color: "#76B7B2",
   },
   {
     duration: "6-7 nights",
     value: 0,
-    color: "#22c55e",
+    color: "#59A14F",
   },
   {
     duration: "8-14 nights",
     value: 0,
-    color: "#14b8a6",
-  },
-  {
-    duration: "15-21 nights",
-    value: 0,
-    color: "#3b82f6",
-  },
-  {
-    duration: "21+ nights",
-    value: 0,
-    color: "#a855f7",
+    color: "#EDC948",
   },
 ];
 
@@ -65,42 +60,32 @@ const startDataDark = [
   {
     duration: "1 night",
     value: 0,
-    color: "#b91c1c",
+    color: "#3B5998",
   },
   {
     duration: "2 nights",
     value: 0,
-    color: "#c2410c",
+    color: "#D95F02",
   },
   {
     duration: "3 nights",
     value: 0,
-    color: "#a16207",
+    color: "#B2182B",
   },
   {
     duration: "4-5 nights",
     value: 0,
-    color: "#4d7c0f",
+    color: "#4D7F86",
   },
   {
     duration: "6-7 nights",
     value: 0,
-    color: "#15803d",
+    color: "#38771D",
   },
   {
     duration: "8-14 nights",
     value: 0,
-    color: "#0f766e",
-  },
-  {
-    duration: "15-21 nights",
-    value: 0,
-    color: "#1d4ed8",
-  },
-  {
-    duration: "21+ nights",
-    value: 0,
-    color: "#7e22ce",
+    color: "#B08904",
   },
 ];
 
@@ -130,3 +115,47 @@ function prepareData(startData, stays) {
 
   return data;
 }
+
+const DurationChart = () => {
+  const { isDarkMode } = useDarkMode();
+
+  const { isLoading, stays } = useRecentStays();
+
+  if (isLoading) return <Spinner />;
+
+  const data = prepareData(!isDarkMode ? startDataLight : startDataDark, stays);
+
+  return (
+    <ChartBox>
+      <Heading as="h2">Stay duration summary</Heading>
+      <ResponsiveContainer width={"100%"} height={300}>
+        <PieChart>
+          <Pie
+            data={data}
+            nameKey="duration"
+            dataKey={"value"}
+            innerRadius={75}
+            outerRadius={110}
+            paddingAngle={4}
+            cx="40%"
+            cy="40%"
+          >
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={data.at(index).color} />
+            ))}
+          </Pie>
+          <Legend
+            verticalAlign="top"
+            align="right"
+            layout="vertical"
+            width={"30%"}
+            iconSize={12}
+            iconType="circle"
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </ChartBox>
+  );
+};
+
+export default DurationChart;
