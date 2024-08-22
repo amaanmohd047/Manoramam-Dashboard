@@ -3,7 +3,6 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import styled from "styled-components";
 import { useState } from "react";
-import { render } from "react-dom";
 
 const Banner = styled.div`
   background-color: var(--color-grey-0);
