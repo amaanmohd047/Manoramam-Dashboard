@@ -8,7 +8,7 @@ const StyledDashboardLayout = styled.div`
 `;
 
 const DashboardLayout = () => {
-  return <div></div>;
+  return <StyledDashboardLayout></StyledDashboardLayout>;
 };
 
 export default DashboardLayout;
