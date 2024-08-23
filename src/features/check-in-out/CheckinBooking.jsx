@@ -106,8 +106,8 @@ function CheckinBooking() {
         >
           I confirm that {guests.name} has paid the total of $
           {addBreakfast
-            ? `${newTotalPrice} ($${totalPrice} suite + $${optionalBreakfastPrice} breakfast) ($${(totalPrice * (0.8)) + optionalBreakfastPrice} Due)`
-            : `${totalPrice} ($${totalPrice * (0.8)} Due)`}
+            ? `${newTotalPrice} ($${totalPrice} suite + $${optionalBreakfastPrice} breakfast) ($${(totalPrice * (0.8)).toFixed(2) + optionalBreakfastPrice} Due)`
+            : `${totalPrice} ($${totalPrice * (0.8).toFixed(2)} Due)`}
         </Checkbox>
       </Box>
       <ButtonGroup>
