@@ -17,7 +17,7 @@ const Table = styled.div`
 const TableHeader = styled.header`
   display: grid;
   /* grid-template-columns: repeat(7, minmax(70px, 0.85fr)); */
-  grid-template-columns: 1fr repeat(5, minmax(70px, 0.85fr)) 0.4fr;
+  grid-template-columns: repeat(6, minmax(70px, 0.85fr)) 0.4fr;
   column-gap: 2.4rem;
   align-items: center;
   overflow: scroll;
